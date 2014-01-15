@@ -26,8 +26,12 @@ wss.on('connection', function(ws) {
 
     // observer
     else if(String(ws.upgradeReq.url).indexOf("observer") != -1){
-      for(var cId in clients){
-        console.log(cId);
+      // respond with available clients
+      var clientIds = [];
+      for(clientId in clients){
+        clientIds.push(clientId);
       }
+      ws.send(JSON.stringify({'clientIds' : clientIds}));
+      // TODO: setup a ws.on(info-request)
     }
 });
