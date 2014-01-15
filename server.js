@@ -1,12 +1,13 @@
 var WebSocketServer = require('ws').Server
   , http = require('http')
-  , express = require('express')
-  , app = express()
   , port = process.env.PORT || 5000;
 
-app.use(express.static(__dirname + '/'));
+var server = http.createServer(function(request,response){
+    response.writeHeader(200, {"Content-Type": "text/plain"});
+    response.write("Get Out!!!");
+    response.end();
+});
 
-var server = http.createServer(app);
 server.listen(port);
 
 console.log('http server listening on %d', port);
