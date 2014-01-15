@@ -9,20 +9,25 @@ var server = http.createServer(function(request,response){
 });
 
 server.listen(port);
-
 console.log('http server listening on %d', port);
 
 var wss = new WebSocketServer({server: server});
 console.log('websocket server created');
+
+var clients = {};
+
 wss.on('connection', function(ws) {
-    var id = setInterval(function() {
-        ws.send(JSON.stringify(new Date()), function() {  });
-    }, 1000);
+    // client
+    if(String(ws.upgradeReq.url).indexOf("client") != -1){
+      var clientId = String(ws.upgradeReq.url).replace("/client?id=","");
+      clients[clientId] = ws;
+      ws.on('close', function() { delete clients[clientId]; });
+    }
 
-    console.log('websocket connection open');
-
-    ws.on('close', function() {
-        console.log('websocket connection close');
-        clearInterval(id);
-    });
+    // observer
+    else if(String(ws.upgradeReq.url).indexOf("observer") != -1){
+      for(var cId in clients){
+        console.log(cId);
+      }
+    }
 });
