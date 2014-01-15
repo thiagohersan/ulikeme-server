@@ -19,6 +19,7 @@ var clients = {};
 wss.on('connection', function(ws) {
     // client
     if(String(ws.upgradeReq.url).indexOf("client") != -1){
+      console.log("on client!");
       var clientId = String(ws.upgradeReq.url).replace("/client?id=","");
       clients[clientId] = ws;
       ws.on('close', function() { delete clients[clientId]; });
