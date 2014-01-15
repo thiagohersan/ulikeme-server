@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "repository": {
     "type": "git",
-    "url": "git@github.com:thiagohersan/uLikeMe.git"
+    "url": "git@github.com:thiagohersan/ulikeme-server.git"
   },
   "dependencies": {
     "ws": "0.4.x"
