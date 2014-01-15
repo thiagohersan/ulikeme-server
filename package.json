@@ -1,13 +1,12 @@
 {
-  "name": "node-ws-canary",
+  "name": "ulikeme-server",
   "version": "0.0.1",
   "repository": {
     "type": "git",
-    "url": "git://github.com/einaros/ws.git"
+    "url": "git@github.com:thiagohersan/uLikeMe.git"
   },
   "dependencies": {
-    "ws": "0.4.x",
-    "express": "3.x"
+    "ws": "0.4.x"
   },
   "engines": {
     "node": "0.10.x",
