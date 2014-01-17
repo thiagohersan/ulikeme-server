@@ -32,6 +32,10 @@ wss.on('connection', function(ws) {
         clientIds.push(clientId);
       }
       ws.send(JSON.stringify({'clientIds' : clientIds}));
-      // TODO: setup a ws.on(info-request)
+      ws.on("message", function(msg){
+        if(msg == "PING") return;
+        var message = JSON.parse(msg);
+        clients[message['client']].send(JSON.stringify({observer:message['observer']}));
+      });
     }
 });
