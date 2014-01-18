@@ -35,7 +35,9 @@ wss.on('connection', function(ws) {
       ws.on("message", function(msg){
         if(msg == "PING") return;
         var message = JSON.parse(msg);
-        clients[message['client']].send(JSON.stringify({observer:message['observer']}));
+        if(clients[message['client']]){
+          clients[message['client']].send(JSON.stringify({observer:message['observer']}));
+        }
       });
     }
 });
