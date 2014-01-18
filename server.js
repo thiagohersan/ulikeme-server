@@ -9,12 +9,10 @@ var server = http.createServer(function(request,response){
 });
 
 server.listen(port);
-console.log('http server listening on %d', port);
 
 var wss = new WebSocketServer({server: server});
-console.log('websocket server created');
-
 var clients = {};
+var observers = {}
 
 wss.on('connection', function(ws) {
     // client
@@ -22,10 +20,20 @@ wss.on('connection', function(ws) {
       var clientId = String(ws.upgradeReq.url).replace("/client?id=","");
       clients[clientId] = ws;
       ws.on('close', function() { delete clients[clientId]; });
+      ws.on("message", function(msg){
+        if(msg == "PING") return;
+        var message = JSON.parse(msg);
+        if(observers[message['observer']]){
+          observers[message['observer']].send(JSON.stringify({postIds:message['ids']}));
+        }
+      });
     }
 
     // observer
     else if(String(ws.upgradeReq.url).indexOf("observer") != -1){
+      var observerId = String(ws.upgradeReq.url).replace("/observer?id=","");
+      observers[observerId] = ws;
+      ws.on('close', function() { delete observers[observerId]; });
       // respond with available clients
       var clientIds = [];
       for(clientId in clients){
