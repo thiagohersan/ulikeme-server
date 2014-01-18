@@ -6,4 +6,4 @@ It uses node.js and WebSockets to make the right connections.
 
 The only dependency is the node.js [ws implementation](http://einaros.github.io/ws/).
 
-Full app detail is [here](https://github.com/thiagohersan/uLikeMe)
+Full app is [here](https://github.com/thiagohersan/uLikeMe)
